@@ -1,6 +1,5 @@
-import * as fs from 'fs';
-
 import { Arguments } from '../helper/arguments-parser';
+import FileReader from '../helper/file-reader';
 import { TimeHelper } from '../helper/time-helper';
 import Logger from '../logger';
 
@@ -8,7 +7,7 @@ export default class Proposer {
   logger: any;
   private lastLineRead?: string;
 
-  constructor(readonly args: Arguments) {
+  constructor(readonly args: Arguments, readonly fileReader: FileReader) {
     this.logger = Logger.get();
   }
 
@@ -18,8 +17,7 @@ export default class Proposer {
   }
 
   public async lookForARequest(): Promise<void> {
-    const fileData = fs.readFileSync('client-requests.txt', { encoding: 'utf8', flag: 'r' });
-    const lines = fileData.split('\n');
+    const lines = this.fileReader.readRequestFile().split('\n');
     const lastLine = lines[lines.length - 1];
     if (lastLine === this.lastLineRead) {
       this.logger.info(`[${this.id()}] no new request found in file`);
