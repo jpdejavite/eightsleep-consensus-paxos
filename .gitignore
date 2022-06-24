@@ -3,3 +3,4 @@ dist
 coverage
 *.log
 /output/logs.txt
+client-requests.txt

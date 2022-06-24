@@ -25,7 +25,8 @@ export default class Client {
   }
 
   startRequest(): void {
-    fs.writeFileSync('client-requests.txt', `initiate ${this.id()}`, { flag: 'a+' });
-    this.logger.info(`[${this.id()}] writed request at ${new Date()}`);
+    const currentTime = new Date();
+    fs.writeFileSync('client-requests.txt', `${this.id()} requests a new response at ${currentTime}\n`, { flag: 'a+' });
+    this.logger.info(`[${this.id()}] writed request at ${currentTime}`);
   }
 }

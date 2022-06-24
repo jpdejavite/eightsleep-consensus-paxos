@@ -12,11 +12,11 @@ export default class ClientRouter {
     this.router = express.Router();
 
     this.router.get('/consensusResponse', (req: Request, res: Response) => {
-      this.startRequestEnpointMethod(req, res);
+      this.getConsensusEnpointMethod(req, res);
     });
   }
 
-  startRequestEnpointMethod(req: Request, res: Response): void {
+  getConsensusEnpointMethod(req: Request, res: Response): void {
     try {
       res.status(HttpStatus.OK).json(this.client.getCurrentResponse());
     } catch (err) {

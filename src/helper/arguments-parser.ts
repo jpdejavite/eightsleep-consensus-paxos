@@ -1,6 +1,7 @@
 enum CommandOption {
   Sleep,
   StartRequest,
+  LookForARequest,
 }
 
 class Command {

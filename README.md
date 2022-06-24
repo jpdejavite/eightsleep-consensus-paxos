@@ -38,7 +38,6 @@ npm run test-happy-path
 
 # TODO
 
-- add proposer
 - add acceptors
 - add learners
 - add scenario: acceptor fails

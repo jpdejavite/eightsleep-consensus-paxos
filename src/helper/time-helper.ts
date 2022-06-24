@@ -1,5 +1,5 @@
 export const TimeHelper = {
   sleep(miliseconds: number): Promise<any> {
-    return new Promise((resolve) => setTimeout(resolve, 5000));
+    return new Promise((resolve) => setTimeout(resolve, miliseconds));
   },
 };
