@@ -7,7 +7,9 @@
     "tsc:init": "tsc --init",
     "build": "tsc",
     "lint": "eslint . --ext .ts",
-    "start": "node dist/src/index"
+    "start": "echo 'not implemented'",
+    "test": "tsc && jest dist/__tests__ > output/logs.txt",
+    "test-happy-path": "tsc && jest dist/__tests__ -t 'happt path, all accept and consensus is obtained' > output/logs.txt"
   },
   "repository": {
     "type": "git",
@@ -21,13 +23,23 @@
   "homepage": "https://github.com/jpdejavite/eightsleep-consensus-paxos#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "typescript": "^4.7.4"
+    "http-status-codes": "^2.1.4",
+    "typescript": "^4.7.4",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "@shopify/eslint-plugin": "^40.5.0",
     "@types/express": "^4.17.13",
+    "@types/jest": "^27.0.2",
+    "@types/winston": "^2.4.4",
     "@typescript-eslint/eslint-plugin": "^4.31.2",
     "@typescript-eslint/parser": "^4.31.2",
-    "eslint": "^7.32.0"
+    "axios": "^0.24.0",
+    "eslint": "^7.32.0",
+    "jest": "^27.2.1"
+  },
+  "jest": {
+    "maxWorkers": 1,
+    "testRegex": ".*\\.test\\.js$"
   }
 }
