@@ -27,6 +27,11 @@ Sleep is used a lot to ensure any actor awaits for other actions to happen and e
 To run multiple scenarios of the consensus algorithm i have written a test and add a specific npm action for it.
 To better evaluate what is happening behind the scenes all logs are redirect to output/logs.txt since jest overwrite then
 
+
+## run all unit tests
+
+npm run test-unit 
+
 ## run all scenarios
 
 npm test 

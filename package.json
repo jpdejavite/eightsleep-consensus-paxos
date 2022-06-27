@@ -9,7 +9,8 @@
     "lint": "eslint . --ext .ts",
     "start": "echo 'not implemented'",
     "test": "tsc && jest dist/__tests__ > output/logs.txt",
-    "test-happy-path": "tsc && jest dist/__tests__ -t 'happt path, all accept and consensus is obtained' > output/logs.txt"
+    "test-happy-path": "tsc && jest dist/__tests__ -t 'happt path, all accept and consensus is obtained' > output/logs.txt",
+    "test-unit": "tsc && jest dist/__tests__/unit --collectCoverage"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,7 @@
   },
   "homepage": "https://github.com/jpdejavite/eightsleep-consensus-paxos#readme",
   "dependencies": {
+    "axios": "^0.24.0",
     "express": "^4.17.1",
     "http-status-codes": "^2.1.4",
     "typescript": "^4.7.4",
@@ -34,7 +36,6 @@
     "@types/winston": "^2.4.4",
     "@typescript-eslint/eslint-plugin": "^4.31.2",
     "@typescript-eslint/parser": "^4.31.2",
-    "axios": "^0.24.0",
     "eslint": "^7.32.0",
     "jest": "^27.2.1"
   },

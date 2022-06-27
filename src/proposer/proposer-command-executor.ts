@@ -16,6 +16,10 @@ const executeCommands = async (proposer: Proposer): Promise<void> => {
       case CommandOption.LookForARequest:
         await proposer.lookForARequest();
         break;
+      case CommandOption.ExecuteAccept:
+        await proposer.executeAcceptPhase();
+        break;
+
     }
   }
 };
