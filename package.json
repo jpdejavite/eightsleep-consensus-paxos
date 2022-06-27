@@ -10,6 +10,10 @@
     "start": "echo 'not implemented'",
     "test": "tsc && jest dist/__tests__ > output/logs.txt",
     "test-happy-path": "tsc && jest dist/__tests__ -t 'happt path, all accept and consensus is obtained' > output/logs.txt",
+    "test-one-acceptor-fails": "tsc && jest dist/__tests__ -t 'one acceptor fails, but consensus is obtained' > output/logs.txt",
+    "test-redundant-learner-fails": "tsc && jest dist/__tests__ -t 'redundant learner fails, but consensus is obtained' > output/logs.txt",
+    "test-proposer-fails": "tsc && jest dist/__tests__ -t 'proposer fails, but new consensus is obtained' > output/logs.txt",
+    "test-minimum-quorum-fails": "tsc && jest dist/__tests__ -t 'minimum quorum fail, cannot obtain consensus' > output/logs.txt",
     "test-unit": "tsc && jest dist/__tests__/unit --collectCoverage"
   },
   "repository": {

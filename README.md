@@ -40,15 +40,22 @@ npm test
 
 npm run test-happy-path
 
+## run one acceptor fails, but consensus is obtained
+
+npm run test-one-acceptor-fails
+
+## run redundant learner fails, but consensus is obtained
+
+npm run test-redundant-learner-fails
+
+## run proposer fails, but new consensus is obtained
+
+npm run test-proposer-fails
+
+## run minimum quorum fail, cannot obtain consensus
+
+npm run test-minimum-quorum-fails
 
 # TODO
 
-- add scenario: acceptor fails
-- add scenario: learner fails
-- add scenario: redundant learner fails
-- add scenario: proposer fails
-- add scenario: multiple proposer conflict
-- add scenario: acceptor two different values
-- add scenario: multi-identifier majority is insufficient
-- add scenario: new Proposers cannot change an existing consensus
 - add docker

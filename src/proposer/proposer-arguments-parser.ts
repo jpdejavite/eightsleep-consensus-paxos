@@ -1,5 +1,5 @@
 class ProposerArguments {
-  constructor(readonly accepterUrls: string[], readonly minimumQuorumSize: number) {
+  constructor(readonly accepterUrls: string[], readonly minimumQuorumSize: number, readonly beginWithN?: number) {
   }
 }
 
@@ -10,8 +10,8 @@ const ProposerArgumentsParser = {
     }
     return Object.assign(new ProposerArguments([], 0), JSON.parse(args[3]));
   },
-  stringify({ accepterUrls, minimumQuorumSize }: { accepterUrls: string[]; minimumQuorumSize: number; }): string {
-    return JSON.stringify(new ProposerArguments(accepterUrls, minimumQuorumSize));
+  stringify({ accepterUrls, minimumQuorumSize, beginWithN }: { accepterUrls: string[]; minimumQuorumSize: number; beginWithN?: number; }): string {
+    return JSON.stringify(new ProposerArguments(accepterUrls, minimumQuorumSize, beginWithN));
   },
 };
 

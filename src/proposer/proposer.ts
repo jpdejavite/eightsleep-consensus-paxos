@@ -28,6 +28,9 @@ export default class Proposer {
     this.currentN = 0;
     this.hasAcceptorsMinimumQuorumSize = false;
     this.hasBeenAcceptedFlag = false;
+    if (this.propserArgs.beginWithN && this.propserArgs.beginWithN > 0) {
+      this.currentN = this.propserArgs.beginWithN;
+    }
   }
 
   getCurrentN(): number {
