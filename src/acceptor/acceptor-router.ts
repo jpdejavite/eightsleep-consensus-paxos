@@ -34,10 +34,10 @@ export default class AcceptorRouter {
     }
   }
 
-  acceptEnpointMethod(req: Request, res: Response): void {
+  async acceptEnpointMethod(req: Request, res: Response): Promise<void> {
     try {
       const input: AcceptInput = req.body;
-      const status = this.acceptor.accept(input.n, input.value) ? HttpStatus.OK : HttpStatus.CONFLICT;
+      const status = await this.acceptor.accept(input.n, input.value) ? HttpStatus.OK : HttpStatus.CONFLICT;
       res.status(status).json(new AcceptOutput(this.acceptor.getCurrentN(), this.acceptor.getCurrentValue()));
     } catch (err) {
       res.status(HttpStatus.INTERNAL_SERVER_ERROR)

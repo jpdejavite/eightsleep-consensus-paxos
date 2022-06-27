@@ -1,4 +1,6 @@
+import LearnInput from '../entity/learn-input';
 import { Arguments } from '../helper/arguments-parser';
+import Requester from '../helper/requester';
 import Logger from '../logger';
 
 import { AcceptorArguments } from './acceptor-arguments-parser';
@@ -8,7 +10,7 @@ export default class Acceptor {
   private currentN: number;
   private currentValue?: string;
 
-  constructor(readonly args: Arguments, readonly acceptorArgs: AcceptorArguments) {
+  constructor(readonly args: Arguments, readonly acceptorArgs: AcceptorArguments, readonly requester: Requester) {
     this.logger = Logger.get();
     this.currentN = 0;
   }
@@ -40,10 +42,29 @@ export default class Acceptor {
     return false;
   }
 
-  accept(proposedN: number, proposedValue: string): boolean {
+  async accept(proposedN: number, proposedValue: string): Promise<boolean> {
     if (proposedN === this.currentN) {
       this.logger.info(`[${this.id()}] accepted value`);
       this.currentValue = proposedValue;
+
+
+      const promises = this.acceptorArgs.learnerUrls.map((learnerUrl) => {
+        return new Promise((resolve) => {
+          try {
+            this.requester.post(`${learnerUrl}/learner/learn`, new LearnInput(this.currentN, this.currentValue || ''))
+              .then(resolve)
+              .catch(resolve);
+          } catch (error) {
+            this.logger.info(`[${this.id()}] learner error ${error}`);
+            resolve(true);
+          }
+        });
+      });
+
+      this.logger.info(`[${this.id()}] communicating with learners, asking to learn`);
+      await Promise.all(promises);
+      this.logger.info(`[${this.id()}] communicating with learners done`);
+
       return true;
     }
 

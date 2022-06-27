@@ -43,14 +43,12 @@ npm run test-happy-path
 
 # TODO
 
-- add acceptors
-- add learners
 - add scenario: acceptor fails
-- add scenario: acceptor fails
+- add scenario: learner fails
 - add scenario: redundant learner fails
 - add scenario: proposer fails
 - add scenario: multiple proposer conflict
 - add scenario: acceptor two different values
 - add scenario: multi-identifier majority is insufficient
-- add scenario::  new Proposers cannot change an existing consensus
+- add scenario: new Proposers cannot change an existing consensus
 - add docker

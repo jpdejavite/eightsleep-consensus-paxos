@@ -8,6 +8,7 @@ import { TimeHelper } from '../../src/helper/time-helper';
 import { Constants } from '../constants/constants';
 import { ProposerArgumentsParser } from '../../src/proposer/proposer-arguments-parser';
 import { AcceptorArgumentsParser } from '../../src/acceptor/acceptor-arguments-parser';
+import { LearnerArgumentsParser } from '../../src/learner/learner-arguments-parser';
 
 const totalTime = 6000;
 const clientPort = 3000;
@@ -22,11 +23,19 @@ let acceptor1Process: ChildProcess;
 const acceptor2Port = 3003;
 let acceptor2Process: ChildProcess;
 
+const learner1Port = 3004;
+let learner1Process: ChildProcess;
+
+const learner2Port = 3005;
+let learner2Process: ChildProcess;
+
 afterAll(() => {
   clientProcess.kill();
   proposerProcess.kill();
   acceptor1Process.kill();
   acceptor2Process.kill();
+  learner1Process.kill();
+  learner2Process.kill();
 });
 
 
@@ -67,7 +76,11 @@ test('happt path, all accept and consensus is obtained', async () => {
     Constants.acceptorIndexFilePath,
     [
       ArgumentsParser.stringify({ port: acceptor1Port, commands: [] }),
-      AcceptorArgumentsParser.stringify({ doTimeout: false, refuseAllProposal: false }),
+      AcceptorArgumentsParser.stringify({
+        doTimeout: false,
+        refuseAllProposal: false,
+        learnerUrls: [`${Constants.localUrl}:${learner1Port}`, `${Constants.localUrl}:${learner2Port}`],
+      }),
     ],
   );
 
@@ -75,7 +88,27 @@ test('happt path, all accept and consensus is obtained', async () => {
     Constants.acceptorIndexFilePath,
     [
       ArgumentsParser.stringify({ port: acceptor2Port, commands: [] }),
-      AcceptorArgumentsParser.stringify({ doTimeout: false, refuseAllProposal: false }),
+      AcceptorArgumentsParser.stringify({
+        doTimeout: false,
+        refuseAllProposal: false,
+        learnerUrls: [`${Constants.localUrl}:${learner1Port}`, `${Constants.localUrl}:${learner2Port}`],
+      }),
+    ],
+  );
+
+  learner1Process = fork(
+    Constants.learnerIndexFilePath,
+    [
+      ArgumentsParser.stringify({ port: learner1Port, commands: [] }),
+      LearnerArgumentsParser.stringify({ clientUrl: `${Constants.localUrl}:${clientPort}`, doNotSendResponse: false }),
+    ],
+  );
+
+  learner2Process = fork(
+    Constants.learnerIndexFilePath,
+    [
+      ArgumentsParser.stringify({ port: learner2Port, commands: [] }),
+      LearnerArgumentsParser.stringify({ clientUrl: `${Constants.localUrl}:${clientPort}`, doNotSendResponse: false }),
     ],
   );
 
@@ -84,7 +117,8 @@ test('happt path, all accept and consensus is obtained', async () => {
   const response = await axios.get(`${Constants.localUrl}:${clientPort}/client/consensusResponse`);
 
   expect(response.status).toBe(HttpStatus.OK);
-  expect(response.data).toBeNull();
+  // eslint-disable-next-line id-length
+  expect(response.data).toStrictEqual({ n: 1, value: 'proposer-3001-1' });
 
 }, totalTime + Constants.initServerTime + Constants.testAdditionalTimeout);
 
